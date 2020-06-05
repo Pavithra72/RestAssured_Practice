@@ -1,0 +1,9 @@
+{
+  "name": "Arvind Audio Service",
+  "description": "Audio streaming service",
+  "type": "DIGITAL",
+  "category": "ADVERTISING",
+  "image_url": "https://example.com/streaming.jpg",
+  "home_url": "https://example.com/home"
+}
+
