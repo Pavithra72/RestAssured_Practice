@@ -1,0 +1,323 @@
+{
+	"info": {
+		"_postman_id": "db13ec27-aad7-40d8-b014-0730a0d36a02",
+		"name": "ZOHO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "grant token",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://accounts.zoho.com/oauth/v2/token?code=1000.5f57a92bd99d3be66f368db4e2ff7fac.7eeeeff529237877de48378014d1185e&client_id=1000.HZAEY70E2RH3YSN56MZH4JHMJ1VS7V&client_secret=0f09518b950afd73df77520a0eb94d31365902b502&redirect_uri=http://www.zoho.com/subscriptions&grant_type=authorization_code",
+					"protocol": "https",
+					"host": [
+						"accounts",
+						"zoho",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"v2",
+						"token"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "1000.5f57a92bd99d3be66f368db4e2ff7fac.7eeeeff529237877de48378014d1185e"
+						},
+						{
+							"key": "client_id",
+							"value": "1000.HZAEY70E2RH3YSN56MZH4JHMJ1VS7V"
+						},
+						{
+							"key": "client_secret",
+							"value": "0f09518b950afd73df77520a0eb94d31365902b502"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "http://www.zoho.com/subscriptions"
+						},
+						{
+							"key": "grant_type",
+							"value": "authorization_code"
+						},
+						{
+							"key": "scope",
+							"value": "ZohoSubscriptions.fullaccess.all",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "testing",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create_Customer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4b041196-25e8-45c9-91e6-c895d976d059",
+						"exec": [
+							"var response = pm.response.json();\r",
+							"console.log(response);\r",
+							"\r",
+							"var cust_id  = response.customer.customer_id;\r",
+							"console.log(cust_id);\r",
+							"\r",
+							"pm.collectionVariables.set(\"created_cust_id\",cust_id);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "1000.c5aa29c46616c7165e76cd111b8ce2e7.74287f278345c5fb0dee5ffea07518b8",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Zoho-oauthtoken1000.1623e3c913ecda74446144a1d4560745.0262c6899f35d18029b8d25711171315",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-com-zoho-subscriptions-organizationid",
+						"value": "717139781",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"display_name\": \"Ashwath Furniture\",\r\n    \"first_name\": \"Ashwath\",\r\n    \"last_name\": \"Srini\",\r\n    \"email\": \"pavi.srini@bowmanfurniture.com\"\r\n    \r\n}"
+				},
+				"url": {
+					"raw": "https://subscriptions.zoho.com/api/v1/customers",
+					"protocol": "https",
+					"host": [
+						"subscriptions",
+						"zoho",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrive customer id",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "1000.c5aa29c46616c7165e76cd111b8ce2e7.74287f278345c5fb0dee5ffea07518b8",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://subscriptions.zoho.com/api/v1/customers/{{created_cust_id}}",
+					"protocol": "https",
+					"host": [
+						"subscriptions",
+						"zoho",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customers",
+						"{{created_cust_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update customer details",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "1000.c5aa29c46616c7165e76cd111b8ce2e7.74287f278345c5fb0dee5ffea07518b8",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"phone\": 23467278,\r\n    \"mobile\": 938237475,\r\n    \"shipping_address\": {\r\n        \"attention\": \"Benjamin George\",\r\n        \"street\": \"Harrington Bay Street\",\r\n        \"city\": \"Salt Lake City\",\r\n        \"state\": \"CA\",\r\n        \"zip\": 92612,\r\n        \"country\": \"U.S.A\",\r\n        \"fax\": 4527389\r\n    }\r\n\r\n}"
+				},
+				"url": {
+					"raw": "https://subscriptions.zoho.com/api/v1/customers/{{created_cust_id}}",
+					"protocol": "https",
+					"host": [
+						"subscriptions",
+						"zoho",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customers",
+						"{{created_cust_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the existing customer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3395b39-bedd-4525-9f55-9101284c1cf5",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "1000.c5aa29c46616c7165e76cd111b8ce2e7.74287f278345c5fb0dee5ffea07518b8",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://subscriptions.zoho.com/api/v1/customers/{{created_cust_id}}",
+					"protocol": "https",
+					"host": [
+						"subscriptions",
+						"zoho",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customers",
+						"{{created_cust_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "78bcffbd-166d-40fa-84bb-3f96a10cc112",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bf1daa95-1fdd-4054-9ab9-b5edda3deb0d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "c3ef1fcc-7c2d-4ac4-b07a-5225b2d5e8f8",
+			"key": "created_cust_id",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

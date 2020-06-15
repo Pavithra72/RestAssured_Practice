@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "3ce55ba0-f65c-4b65-b4be-f8850b597888",
+		"name": "BestBuy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "FindStore",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.bestbuy.com/v1/stores(area(02864,10))?format=json&show=storeId,storeType,name,address,distance&pageSize=4&apiKey=qUh3qMK14GdwAs9bO59QRSCJ",
+					"protocol": "https",
+					"host": [
+						"api",
+						"bestbuy",
+						"com"
+					],
+					"path": [
+						"v1",
+						"stores(area(02864,10))"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "json"
+						},
+						{
+							"key": "show",
+							"value": "storeId,storeType,name,address,distance"
+						},
+						{
+							"key": "pageSize",
+							"value": "4"
+						},
+						{
+							"key": "apiKey",
+							"value": "qUh3qMK14GdwAs9bO59QRSCJ"
+						}
+					]
+				},
+				"description": "Find the store name, address and distance near to postal code 02864 for product "
+			},
+			"response": []
+		},
+		{
+			"name": "Find all canon products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.bestbuy.com/v1/products(manufacturer=canon&salePrice<1500&salePrice>1000)?format=json&show=sku,name,salePrice&apiKey=qUh3qMK14GdwAs9bO59QRSCJ",
+					"protocol": "https",
+					"host": [
+						"api",
+						"bestbuy",
+						"com"
+					],
+					"path": [
+						"v1",
+						"products(manufacturer=canon&salePrice<1500&salePrice>1000)"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "json"
+						},
+						{
+							"key": "show",
+							"value": "sku,name,salePrice"
+						},
+						{
+							"key": "apiKey",
+							"value": "qUh3qMK14GdwAs9bO59QRSCJ"
+						}
+					]
+				},
+				"description": "Find all the canon products of price range between $1000-$1500"
+			},
+			"response": []
+		},
+		{
+			"name": "GetPriceOfiPhone11",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.bestbuy.com/v1/products(manufacturer=apple&search=mobile)?format=json&show=sku,name,salePrice,regularPrice&apiKey=qUh3qMK14GdwAs9bO59QRSCJ",
+					"protocol": "https",
+					"host": [
+						"api",
+						"bestbuy",
+						"com"
+					],
+					"path": [
+						"v1",
+						"products(manufacturer=apple&search=mobile)"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "json"
+						},
+						{
+							"key": "show",
+							"value": "sku,name,salePrice,regularPrice"
+						},
+						{
+							"key": "apiKey",
+							"value": "qUh3qMK14GdwAs9bO59QRSCJ"
+						}
+					]
+				},
+				"description": "Get the regular and selling price for iPhone11 Pro"
+			},
+			"response": []
+		},
+		{
+			"name": "Find Store For Iphone",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.bestbuy.com/v1/products(manufacturer=apple&search=moble&inStorePickup=true)+stores(region=RI)?format=json&show=sku,name,stores.storeId,stores.name,stores.address&apiKey=qUh3qMK14GdwAs9bO59QRSCJ",
+					"protocol": "https",
+					"host": [
+						"api",
+						"bestbuy",
+						"com"
+					],
+					"path": [
+						"v1",
+						"products(manufacturer=apple&search=moble&inStorePickup=true)+stores(region=RI)"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "json"
+						},
+						{
+							"key": "show",
+							"value": "sku,name,stores.storeId,stores.name,stores.address"
+						},
+						{
+							"key": "apiKey",
+							"value": "qUh3qMK14GdwAs9bO59QRSCJ"
+						}
+					]
+				},
+				"description": "Find the stores having store pick-up availability of iPhone 11 Pro in stores in RI region"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
