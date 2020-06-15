@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "33ae6fb1-55bc-4b49-a0e5-bb9cb5f40508",
+		"name": "PayPal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ListTheProducts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e880a2f-aa5b-4d37-b79c-19a1a49d6d8a",
+						"exec": [
+							"var response = pm.response.json();\r",
+							"console.log(response);\r",
+							"var category = response.links.category;\r",
+							"console.log(category)\r",
+							"var type = response.links.type;\r",
+							"console.log(type);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "A21AAHfsQhtkLoxw-JL2UhYzYNMub7C_rnocFWYnI7fKQtnfBhftACyHfZCPWI71_urHp43yE0_iMsLzxvK9LC46_k92mYc4w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.sandbox.paypal.com/v1/catalogs/products?page=4",
+					"protocol": "https",
+					"host": [
+						"api",
+						"sandbox",
+						"paypal",
+						"com"
+					],
+					"path": [
+						"v1",
+						"catalogs",
+						"products"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewProduct",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "741db64b-eacd-49f3-81f0-bae123fb8e0b",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "A21AAHfsQhtkLoxw-JL2UhYzYNMub7C_rnocFWYnI7fKQtnfBhftACyHfZCPWI71_urHp43yE0_iMsLzxvK9LC46_k92mYc4w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Pavithra Streaming Service\",\r\n  \"description\": \"Video streaming service\",\r\n  \"type\": \"SERVICE\",\r\n  \"category\": \"SOFTWARE\",\r\n  \"image_url\": \"https://example.com/streaming.jpg\",\r\n  \"home_url\": \"https://example.com/home\"\r\n}"
+				},
+				"url": {
+					"raw": "https://api.sandbox.paypal.com/v1/catalogs/products",
+					"protocol": "https",
+					"host": [
+						"api",
+						"sandbox",
+						"paypal",
+						"com"
+					],
+					"path": [
+						"v1",
+						"catalogs",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTypeAndCategory",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "608e67ce-51dd-43ad-acd8-0fdc07ed6691",
+						"exec": [
+							"var response = pm.response.json();\r",
+							"console.log(response);\r",
+							"var category = response.category;\r",
+							"console.log(category)\r",
+							"var type = response.type;\r",
+							"console.log(type);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer A21AAHfsQhtkLoxw-JL2UhYzYNMub7C_rnocFWYnI7fKQtnfBhftACyHfZCPWI71_urHp43yE0_iMsLzxvK9LC46_k92mYc4w",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.sandbox.paypal.com/v1/catalogs/products/PROD-11W85221VK001862H",
+					"protocol": "https",
+					"host": [
+						"api",
+						"sandbox",
+						"paypal",
+						"com"
+					],
+					"path": [
+						"v1",
+						"catalogs",
+						"products",
+						"PROD-11W85221VK001862H"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAccessToken",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://api.sandbox.paypal.com/v1/oauth2/token",
+					"protocol": "https",
+					"host": [
+						"api",
+						"sandbox",
+						"paypal",
+						"com"
+					],
+					"path": [
+						"v1",
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "ELwUC52rlQgfjTH22x7lPBoTilkMF8U4RYZvXPeASwzjagqIFKUXpHoT66yLPI3TlRvzCF4FJmematQq",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "Ac5t97wHVfLvsj0L4UyYrheblrgas6d8dngdGTuoaJ_KFEn3kIyUVeHMKf6iTYPYtlgN7YYl5mMbIfHj",
+				"type": "string"
+			}
+		]
+	},
+	"protocolProfileBehavior": {}
+}
