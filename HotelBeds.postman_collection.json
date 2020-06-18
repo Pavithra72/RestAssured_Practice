@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "c37d4612-7c49-49f9-a11d-9d1e28cdc287",
+		"name": "HotelBeds",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CheckAvailabilityOfRooms",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9220e3a9-ed36-46b5-a786-98bf423a864b",
+						"exec": [
+							"var response = pm.response.json();\r",
+							"//console.log(response);\r",
+							"var rateHotels = [];\r",
+							"rateHotels = response.hotels.hotels;\r",
+							"//console.log(rateHotels);\r",
+							"var rateRooms =[];\r",
+							"var rateRates = [];\r",
+							"var rateKeys=[];\r",
+							"for(i =0; i<rateHotels.length; i++ ){\r",
+							"    rateRooms= response.hotels.hotels[i].rooms;\r",
+							"    //console.log(rateRooms);\r",
+							"    for(j=0;j<rateRooms.length;j++){\r",
+							"        rateRates =response.hotels.hotels[i].rooms[j].rates;\r",
+							"        for(k=0;k<rateRates.length;k++){\r",
+							"        rateKeys.push(response.hotels.hotels[i].rooms[j].rates[k].rateKey);\r",
+							"       \r",
+							"        }\r",
+							"    }\r",
+							"}\r",
+							" console.log(rateKeys);\r",
+							"\r",
+							"pm.environment.set(\"rateKeyVar\", rateKeys);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Api-key",
+						"value": "{{Api-key}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Signature",
+						"value": "{{X-Signature}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"stay\": {\r\n        \"checkIn\": \"2020-06-20\",\r\n        \"checkOut\": \"2020-06-22\"\r\n    },\r\n    \"occupancies\": [\r\n        {\r\n            \"rooms\": 1,\r\n            \"adults\": 2,\r\n            \"children\": 0\r\n        }\r\n    ],\r\n    \"destination\":{\r\n        \"code\":\"BCN\"\r\n    }\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "https://api.test.hotelbeds.com/hotel-api/1.0/hotels",
+					"protocol": "https",
+					"host": [
+						"api",
+						"test",
+						"hotelbeds",
+						"com"
+					],
+					"path": [
+						"hotel-api",
+						"1.0",
+						"hotels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CheckRateForRooms",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fbd73606-c389-40a8-9c1b-16fd31bdb80a",
+						"exec": [
+							"var rateKeyBody = \"\";\r",
+							"if(environment[\"rateKeyVar\"]!= undefined){\r",
+							"    var rateKeyList = environment[\"rateKeyVar\"];\r",
+							"    for(var i=0;i<rateKeyList.length;i++){\r",
+							"        var rateKeyVal=rateKeyList[i];\r",
+							"        if(rateKeyBody!= \"\"){\r",
+							"                            var ratebody =  {rateKey: rateKeyVal};   \r",
+							"            rateKeyBody = JSON.stringify(rateKeyBody)+\",\"+JSON.stringify(ratebody);\r",
+							"            \r",
+							"        }\r",
+							"        else{\r",
+							"rateKeyBody=  {rateKey: rateKeyVal};\r",
+							"rateKeyBody = rateKeyBody;\r",
+							"        }\r",
+							"    }\r",
+							"}\r",
+							"var body_str = rateKeyBody;\r",
+							"pm.environment.set(\"rateKeyBodyVal\", body_str);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "564aa692-71cb-440e-88d7-df908fdafafa",
+						"exec": [
+							"var response = pm.response.json();\r",
+							"//console.log(response);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Api-key",
+						"value": "{{Api-key}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Signature",
+						"value": "{{X-Signature}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"rooms\": [\r\n                {{rateKeyBodyVal}}\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "https://api.test.hotelbeds.com/hotel-api/1.0/checkrates",
+					"protocol": "https",
+					"host": [
+						"api",
+						"test",
+						"hotelbeds",
+						"com"
+					],
+					"path": [
+						"hotel-api",
+						"1.0",
+						"checkrates"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
