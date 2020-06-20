@@ -1,0 +1,216 @@
+{
+	"info": {
+		"_postman_id": "0a3749ee-d744-4c78-8b3f-370bdae4d5af",
+		"name": "UI Bank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "RegisterAccount",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"firstName\":\"Pavi\",\"title\":\"ms\",\"lastName\":\"Srini\",\"gender\":\"female\",\"employmentStatus\":\"Full-time\",\"age\":\"01/01/1990\",\"maritalStatus\":\"Single\",\"username\":\"pavi1234\",\"email\":\"pavi7@yahoo.com\",\"password\":\"Pavi.7289\",\"type\":\"customer\"}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://uibank-api.azurewebsites.net/api/users/",
+					"protocol": "https",
+					"host": [
+						"uibank-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoginUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"ashwath123\", \r\n    \"password\": \"Ashwath@31\"\r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://uibank-api.azurewebsites.net/api/users/login",
+					"protocol": "https",
+					"host": [
+						"uibank-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAccountDetails",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{userAuth}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://uibank-api.azurewebsites.net/api/accounts?filter[where][userId]={{user}}",
+					"protocol": "https",
+					"host": [
+						"uibank-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "filter[where][userId]",
+							"value": "{{user}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ApplyForLoan",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "889d6e5e-c44c-4c56-9c8e-41158c48ba41",
+						"exec": [
+							"var response = pm.response.json();\r",
+							"console.log(response);\r",
+							"var loanid = response.quoteid;\r",
+							"pm.collectionVariables.set(\"loanId\",loanid);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"pavithras.msec@gmail.com\", \"amount\": 500, \"term\": 3, \"income\": 10000, \"age\": 70289}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://uibank-api.azurewebsites.net/api/quotes/newquote",
+					"protocol": "https",
+					"host": [
+						"uibank-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"quotes",
+						"newquote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoanStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "71ca9df4-c0c4-4dac-a9f2-99aee21c420e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "75be3295-5e1a-4bcd-aed4-d7cf7b62e0b5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "963db840-1e65-4839-a168-9a50c0fa2fb4",
+			"key": "userAuth",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "b548c06b-f924-47a7-9a1b-fb489c7f5327",
+			"key": "user",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "dd33cb50-fd59-49c7-bd9b-a2735d45ad63",
+			"key": "loanId",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
