@@ -1,0 +1,267 @@
+{
+	"info": {
+		"_postman_id": "e1f56524-0b48-46cf-88cd-f2135ae4f81e",
+		"name": "TomTom",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "RegisterAdminKey",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"secret\": \"My very secret secret\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.tomtom.com/geofencing/1/register?key=1SFWj4feUAQd4BWbuLX3Shc9dI6BHhg6",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tomtom",
+						"com"
+					],
+					"path": [
+						"geofencing",
+						"1",
+						"register"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "1SFWj4feUAQd4BWbuLX3Shc9dI6BHhg6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddNewProject",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Pavithra Workshops in Germany\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.tomtom.com/geofencing/1/projects/project?key=1SFWj4feUAQd4BWbuLX3Shc9dI6BHhg6&adminKey=ImHgpNxX0G0LuJ3eLBGb03aNR7jxj1GMQTN5BsbHocBCRYRm",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tomtom",
+						"com"
+					],
+					"path": [
+						"geofencing",
+						"1",
+						"projects",
+						"project"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "1SFWj4feUAQd4BWbuLX3Shc9dI6BHhg6"
+						},
+						{
+							"key": "adminKey",
+							"value": "ImHgpNxX0G0LuJ3eLBGb03aNR7jxj1GMQTN5BsbHocBCRYRm"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListProjectsAnValidate theNewProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "df54333f-d6d5-438e-b778-8c0ba7c812ac",
+						"exec": [
+							"var response = pm.response.json();\r",
+							"console.log(response);\r",
+							"pm.test(\"The Response contains the Created Project\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"9a8690d5-59c8-4989-a2ed-2372846fa34\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.tomtom.com/geofencing/1/projects?key=1SFWj4feUAQd4BWbuLX3Shc9dI6BHhg6",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tomtom",
+						"com"
+					],
+					"path": [
+						"geofencing",
+						"1",
+						"projects"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "1SFWj4feUAQd4BWbuLX3Shc9dI6BHhg6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegenarateAdminKey",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"secret\": \"My very secret secret\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.tomtom.com/geofencing/1/regenerateKey?key=OqRR9KQqCPQW1ntAd2Ox78eCIf9Ra7AJ",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tomtom",
+						"com"
+					],
+					"path": [
+						"geofencing",
+						"1",
+						"regenerateKey"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "OqRR9KQqCPQW1ntAd2Ox78eCIf9Ra7AJ"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddNewFenceToProject",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"No Entry zone 23\",\r\n  \"type\": \"Feature\",\r\n  \"geometry\": {\r\n    \"radius\": 75,\r\n    \"type\": \"Point\",\r\n    \"shapeType\": \"Circle\",\r\n    \"coordinates\": [-67.137343, 45.137451]\r\n  },\r\n  \"properties\": {\r\n    \"maxSpeedKmh\": 70\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.tomtom.com/geofencing/1/projects/9a8690d5-59c8-4989-a2ed-2372846fa341/fence?key=1SFWj4feUAQd4BWbuLX3Shc9dI6BHhg6&adminKey=IqGRmsWvBo5oJOqbUYUxC0TILykJosQbtnJbYt2dOIcfxSqO",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tomtom",
+						"com"
+					],
+					"path": [
+						"geofencing",
+						"1",
+						"projects",
+						"9a8690d5-59c8-4989-a2ed-2372846fa341",
+						"fence"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "1SFWj4feUAQd4BWbuLX3Shc9dI6BHhg6"
+						},
+						{
+							"key": "adminKey",
+							"value": "IqGRmsWvBo5oJOqbUYUxC0TILykJosQbtnJbYt2dOIcfxSqO"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetFenceTransitionAnd Validate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f34a5315-129e-470f-9c4d-e959fded91c5",
+						"exec": [
+							"pm.test(\"The Fence id is available in transition\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"f644e541-7699-43db-864c-a985dfafa14d\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.tomtom.com/geofencing/1/transitions/fences/f644e541-7699-43db-864c-a985dfafa14d?key=1SFWj4feUAQd4BWbuLX3Shc9dI6BHhg6&from=2020-06-24T01:00:00&to=2020-06-24T23:00:00",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tomtom",
+						"com"
+					],
+					"path": [
+						"geofencing",
+						"1",
+						"transitions",
+						"fences",
+						"f644e541-7699-43db-864c-a985dfafa14d"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "1SFWj4feUAQd4BWbuLX3Shc9dI6BHhg6"
+						},
+						{
+							"key": "from",
+							"value": "2020-06-24T01:00:00"
+						},
+						{
+							"key": "to",
+							"value": "2020-06-24T23:00:00"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
